@@ -17,7 +17,7 @@ Dhammaan data-da waxaa lagu kaydiyaa **memory (arrays)**, sidaas darteed databas
 
 ---
 
-## ▶️ Sida loo ordo project-ka
+## ▶️ Sida loo run gareeyo project-ka
 
 ### 1. Install dependencies
 
@@ -163,7 +163,7 @@ Waxaad isticmaali kartaa:
 
 ## 👨‍💻 Author
 
-Salah
+Salah sharafdin
 
 ---
 
