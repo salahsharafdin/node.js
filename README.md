@@ -5,6 +5,7 @@ Kani waa **REST API** fudud oo lagu dhisay Node.js iyo Express, kaas oo maamula:
 * 👤 Users
 * 🛍️ Products
 * 🧾 Register
+* 📝 comments
 
 Dhammaan data-da waxaa lagu kaydiyaa **memory (arrays)**, sidaas darteed database lama isticmaalin.
 
@@ -120,6 +121,30 @@ http://localhost:8003
 ### DELETE /register/:id
 
 → Delete register
+
+---
+
+## 📝 Comments API
+
+### GET /comments
+
+→ Hel dhammaan comments
+
+### GET /comments/:id
+
+→ Hel comment gaar ah
+
+### POST /comments
+
+→ Ku dar comment cusub
+
+### PUT /comments/:id
+
+→ Update comment
+
+### DELETE /comments/:id
+
+→ Delete comment
 
 ---
 
