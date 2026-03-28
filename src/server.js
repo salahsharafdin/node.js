@@ -22,6 +22,15 @@ const register = [
 ];
 
 
+//comment
+
+const comments = [
+    {id:1, text: "This is a comment",},
+    {id:2, text: "This is another comment", },
+    {id:3, text: "This is yet another comment",},
+];
+
+
 const app = express();
 const port = 8003;
 
@@ -35,6 +44,7 @@ app.get('/users', (req,res) =>{
     res.send(users);
 });
 
+//get user by id
 app.get('/users/:id', (req,res) =>{
     const userId = parseInt(req.params.id);
     const user = users.find(u => u.id === userId);
@@ -46,6 +56,7 @@ app.get('/users/:id', (req,res) =>{
 });
 
 
+//update user by id
 app.put('/users/:id', (req,res) =>{
     const userId = parseInt(req.params.id);
     const userIndex = users.findIndex(u => u.id === userId);
@@ -57,6 +68,7 @@ app.put('/users/:id', (req,res) =>{
     }
 });
 
+//delete user by id
 app.delete('/users/:id', (req,res) =>{
     const userId = parseInt(req.params.id);
     const userIndex = users.findIndex(u => u.id === userId);
@@ -68,6 +80,7 @@ app.delete('/users/:id', (req,res) =>{
     }
 });
 
+//create new user
 app.post('/users', (req,res) =>{
     const newUser = {
         id: users.length + 1,
@@ -83,6 +96,7 @@ app.get('/products', (req,res) =>{
     res.send(products);
 });
 
+//get product by id
 app.get('/products/:id', (req,res) =>{
     const productId = parseInt(req.params.id);
     const product = products.find(p => p.id === productId);
@@ -93,6 +107,7 @@ app.get('/products/:id', (req,res) =>{
     }
 });
 
+//update product by id
 app.put('/products/:id', (req,res) =>{
     const productId = parseInt(req.params.id);
     const productIndex = products.findIndex(p => p.id === productId);
@@ -104,6 +119,8 @@ app.put('/products/:id', (req,res) =>{
     }
 });
 
+
+//delete product by id
 app.delete('/products/:id', (req,res) =>{
     const productId = parseInt(req.params.id);
     const productIndex = products.findIndex(p => p.id === productId);
@@ -115,6 +132,7 @@ app.delete('/products/:id', (req,res) =>{
     }
 });
 
+//create new product
 app.post('/products', (req,res) =>{
     const newProduct = {
         id: products.length + 1,
@@ -130,6 +148,7 @@ app.get('/register', (req,res) =>{
     res.send(register);
 });
 
+//get register by id
 app.get('/register/:id', (req,res) =>{
     const registerId = parseInt(req.params.id);
     const reg = register.find(r => r.id === registerId);
@@ -140,6 +159,8 @@ app.get('/register/:id', (req,res) =>{
     }
 });
 
+
+//update register by id
 app.put('/register/:id', (req,res) =>{
     const registerId = parseInt(req.params.id);
     const registerIndex = register.findIndex(r => r.id === registerId);
@@ -151,6 +172,8 @@ app.put('/register/:id', (req,res) =>{
     }
 });
 
+
+//delete register by id
 app.delete('/register/:id', (req,res) =>{
     const registerId = parseInt(req.params.id);
     const registerIndex = register.findIndex(r => r.id === registerId);
@@ -162,6 +185,8 @@ app.delete('/register/:id', (req,res) =>{
     }
 });
 
+
+//create new register
 app.post('/register', (req,res) =>{
     const newRegister = {
         id: register.length + 1,
@@ -169,6 +194,59 @@ app.post('/register', (req,res) =>{
     };
     register.push(newRegister);
     res.status(201).send(newRegister);
+});
+
+
+
+//comment endpoint 4
+
+app.get('/comments', (req,res) =>{
+    res.send(comments);
+});
+
+//get comment by id
+app.get('/comments/:id', (req,res) =>{
+    const commentId = parseInt(req.params.id);
+    const comment = comments.find(c => c.id === commentId);
+    if(comment){
+        res.send(comment); 
+    } else {
+        res.status(404).send({error: "Comment not found"})
+    }
+});
+
+//update comment by id
+app.put('/comments/:id', (req,res) =>{
+    const commentId = parseInt(req.params.id);
+    const commentIndex = comments.findIndex(c => c.id === commentId);
+    if(commentIndex !== -1){
+        comments[commentIndex].text = "updated comment";
+        res.send(comments[commentIndex]);
+    } else {
+        res.status(404).send({error: "Comment not found"});
+    }
+});
+
+//delete comment by id
+app.delete('/comments/:id', (req,res) =>{
+    const commentId = parseInt(req.params.id);
+    const commentIndex = comments.findIndex(c => c.id === commentId);
+    if(commentIndex !== -1){
+        comments.splice(commentIndex, 1);
+        res.send({message: "Comment deleted"});
+    } else {
+        res.status(404).send({error: "Comment not found"});
+    }
+});
+
+//create new comment
+app.post('/comments', (req,res) =>{
+    const newComment = {
+        id: comments.length + 1,
+        text: `Comment ${comments.length + 1}`,
+    };
+    comments.push(newComment);
+    res.status(201).send(newComment);
 });
 
 
