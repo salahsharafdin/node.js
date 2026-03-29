@@ -1,172 +1,136 @@
-# 🚀 Simple Express API (Users, Products,comments)
+🚀 Simple Express API (Users, Products, Orders)
 
-Kani waa **REST API** fudud oo lagu dhisay Node.js iyo Express, kaas oo maamula:
+Kani waa REST API fudud oo lagu dhisay Node.js iyo Express, kaas oo maamula:
 
-* 👤 Users
-* 🛍️ Products
-* 📝 comments
+👤 Users
+🛍️ Products
+📝 Orders
 
-Dhammaan data-da waxaa lagu kaydiyaa **memory (arrays)**, sidaas darteed database lama isticmaalin.
+Dhammaan data-da waxaa lagu kaydiyaa memory (arrays), sidaas darteed database lama isticmaalin.
 
----
-
-## 🛠️ Technologies
-
-* Node.js
-* Express.js
-
----
-
-## ▶️ Sida loo run gareeyo project-ka
-
-### 1. Install dependencies
-
-```bash
+🛠️ Technologies
+Node.js
+Express.js
+▶️ Sida loo run gareeyo project-ka
+1. Install dependencies
 npm install
-```
-
-### 2. Run server
-
-```bash
-node server.js
-```
+2. Run server
+node index.js
 
 Server-ku wuxuu ka shaqeyn doonaa:
 
-```
 http://localhost:8003
-```
-
----
-
-## 🌐 Base URL
-
-```
+🌐 Base URL
 http://localhost:8003
-```
-
----
-
-## 📌 Endpoints
-
----
-
-## 👤 Users API
-
-### GET /users
+📌 Endpoints
+👤 Users API
+GET /users
 
 → Hel dhammaan users
 
-### GET /users/:id
+GET /users/:id
 
 → Hel user gaar ah
 
-### POST /users
+POST /users
 
 → Ku dar user cusub
 
-### PUT /users/:id
+PUT /users/:id
 
 → Update user
 
-### DELETE /users/:id
+DELETE /users/:id
 
 → Delete user
 
----
-
-## 🛍️ Products API
-
-### GET /products
+🛍️ Products API
+GET /products
 
 → Hel dhammaan products
 
-### GET /products/:id
+GET /products/:id
 
 → Hel product gaar ah
 
-### POST /products
+POST /products
 
 → Ku dar product cusub
 
-### PUT /products/:id
+PUT /products/:id
 
 → Update product
 
-### DELETE /products/:id
+DELETE /products/:id
 
 → Delete product
 
----
+📝 Orders API
+GET /orders
 
-## 📝 Comments API
+→ Hel dhammaan orders
 
-### GET /comments
+GET /orders/:id
 
-→ Hel dhammaan comments
+→ Hel order gaar ah
 
-### GET /comments/:id
+POST /orders
 
-→ Hel comment gaar ah
+→ Ku dar order cusub
 
-### POST /comments
+PUT /orders/:id
 
-→ Ku dar comment cusub
+→ Update order quantity
 
-### PUT /comments/:id
+DELETE /orders/:id
 
-→ Update comment
+→ Delete order
 
-### DELETE /comments/:id
-
-→ Delete comment
-
----
-
-## 📊 Status Codes
-
-* **200 → OK**
-* **201 → Created**
-* **400 → Bad Request**
-* **404 → Not Found**
-* **500 → Server Error**
-
----
-
-## 🧪 Testing
+📊 Status Codes
+200 → OK
+201 → Created
+400 → Bad Request
+404 → Not Found
+500 → Server Error
+🧪 Testing
 
 Waxaad isticmaali kartaa:
 
-* Postman
-* Thunder Client (VS Code)
+Postman
+Thunder Client (VS Code)
+📌 Example Response
 
----
+User Example:
 
-## 📌 Example Response
-
-```json
 {
   "id": 1,
   "name": "John Doe"
 }
-```
 
----
+Product Example:
 
-## ⚠️ Important Notes
+{
+  "id": 1,
+  "name": "Laptop",
+  "price": 999.99
+}
 
-* Data waxaa lagu kaydiyaa **arrays**, marka server-ka la restart gareeyo waa lumiyaa
-* Ma jiro authentication (login / signup)
-* Update endpoints waxay isticmaalaan values static ah (hardcoded)
+Order Example:
 
----
+{
+  "id": 1,
+  "userId": 1,
+  "productId": 1,
+  "quantity": 1
+}
+⚠️ Important Notes
+Data waxaa lagu kaydiyaa arrays, marka server-ka la restart gareeyo waa lumiyaa
+Ma jiro authentication (login / signup)
+Update endpoints waxay isticmaalaan values static ah (hardcoded)
+👨‍💻 Author
 
-## 👨‍💻 Author
+Salah Sharafdin
 
-Salah sharafdin
-
----
-
-## 📄 License
+📄 License
 
 MIT License
