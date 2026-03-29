@@ -1,10 +1,9 @@
-# 🚀 Simple Express API (Users, Products, Register)
+# 🚀 Simple Express API (Users, Products,comments)
 
 Kani waa **REST API** fudud oo lagu dhisay Node.js iyo Express, kaas oo maamula:
 
 * 👤 Users
 * 🛍️ Products
-* 🧾 Register
 * 📝 comments
 
 Dhammaan data-da waxaa lagu kaydiyaa **memory (arrays)**, sidaas darteed database lama isticmaalin.
@@ -97,30 +96,6 @@ http://localhost:8003
 ### DELETE /products/:id
 
 → Delete product
-
----
-
-## 🧾 Register API
-
-### GET /register
-
-→ Hel dhammaan register
-
-### GET /register/:id
-
-→ Hel register gaar ah
-
-### POST /register
-
-→ Ku dar register cusub
-
-### PUT /register/:id
-
-→ Update register
-
-### DELETE /register/:id
-
-→ Delete register
 
 ---
 

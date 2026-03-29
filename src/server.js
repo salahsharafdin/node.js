@@ -1,155 +1,196 @@
-import express from 'express';
+import express, { text } from 'express';
+
+//users
+const users = [
+    {id:1, name:"John Doe"},
+    {id:2, name:"Jane Smith"},
+    {id:3, name:"Bob Johnson"},
+];
+
+//prducts
+const products = [
+    {id:1, name:"Product 1", price: 10.99},
+    {id:2, name:"Product 2", price: 19.99},
+    {id:3, name:"Product 3", price: 5.99},
+];
+
+
+//comment
+
+const comments = [
+    {id:1, text: "This is a comment", userId: 1},
+    {id:2, text: "This is another comment", userId: 2},
+    {id:3, text: "This is yet another comment", userId: 3},
+];
+
 
 const app = express();
-const port = 8007;
+const port = 8003;
 
-// 💡 Middleware for JSON body
-app.use(express.json());
-
-// ===================
-// DUMMY DATA
-// ===================
-
-// Users
-const users = [
-  { id: 1, name: "John Doe", email: "john@example.com", password: "123456" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com", password: "123456" },
-  { id: 3, name: "Bob Johnson", email: "bob@example.com", password: "123456" },
-];
-
-// Products
-const products = [
-  { id: 1, name: "Product 1", price: 10.99 },
-  { id: 2, name: "Product 2", price: 19.99 },
-  { id: 3, name: "Product 3", price: 5.99 },
-];
-
-// Comments
-const comments = [
-  { id: 1, text: "This is a comment" },
-  { id: 2, text: "This is another comment" },
-  { id: 3, text: "This is yet another comment" },
-];
-
-// ===================
-// ROOT
-// ===================
-app.get('/', (req, res) => res.send("hello world"));
-
-// ===================
-// USERS CRUD
-// ===================
-app.get('/users', (req, res) => res.send(users));
-
-app.get('/users/:id', (req, res) => {
-  const user = users.find(u => u.id === parseInt(req.params.id));
-  user ? res.send(user) : res.status(404).send({ error: "User not found" });
+app.get('/', (req,res) =>{
+    res.send("hello world");
 });
 
-app.post('/users', (req, res) => {
-  const { name, email, password } = req.body;
-  const newUser = {
-    id: users.length + 1,
-    name: name || `User ${users.length + 1}`,
-    email: email || "",
-    password: password || ""
-  };
-  users.push(newUser);
-  res.status(201).send(newUser);
+//users endpoint 1
+
+app.get('/users', (req,res) =>{
+    res.send(users);
 });
 
-app.put('/users/:id', (req, res) => {
-  const user = users.find(u => u.id === parseInt(req.params.id));
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.password = req.body.password || user.password;
-    res.send(user);
-  } else res.status(404).send({ error: "User not found" });
+//get user by id
+app.get('/users/:id', (req,res) =>{
+    const userId = parseInt(req.params.id);
+    const user = users.find(u => u.id === userId);
+    if(user){
+        res.send(user); 
+    } else {
+        res.status(404).send({error: "User not found"})
+    }
 });
 
-app.delete('/users/:id', (req, res) => {
-  const index = users.findIndex(u => u.id === parseInt(req.params.id));
-  if (index !== -1) {
-    users.splice(index, 1);
-    res.send({ message: "User deleted" });
-  } else res.status(404).send({ error: "User not found" });
+
+//update user by id
+app.put('/users/:id', (req,res) =>{
+    const userId = parseInt(req.params.id);
+    const userIndex = users.findIndex(u => u.id === userId);
+    if(userIndex !== -1){
+        users[userIndex].name = "updated user";
+        res.send(users[userIndex]);
+    } else {
+        res.status(404).send({error: "User not found"});
+    }
 });
 
-// ===================
-// PRODUCTS CRUD
-// ===================
-app.get('/products', (req, res) => res.send(products));
-
-app.get('/products/:id', (req, res) => {
-  const product = products.find(p => p.id === parseInt(req.params.id));
-  product ? res.send(product) : res.status(404).send({ error: "Product not found" });
+//delete user by id
+app.delete('/users/:id', (req,res) =>{
+    const userId = parseInt(req.params.id);
+    const userIndex = users.findIndex(u => u.id === userId);
+    if(userIndex !== -1){
+        users.splice(userIndex, 1);
+        res.send({message: "User deleted"});
+    } else {
+        res.status(404).send({error: "User not found"});
+    }
 });
 
-app.post('/products', (req, res) => {
-  const { name, price } = req.body;
-  const newProduct = {
-    id: products.length + 1,
-    name: name || `Product ${products.length + 1}`,
-    price: price || 0
-  };
-  products.push(newProduct);
-  res.status(201).send(newProduct);
+//create new user
+app.post('/users', (req,res) =>{
+    const newUser = {
+        id: users.length + 1,
+        name: `User ${users.length + 1}`,
+    };
+    users.push(newUser);
+    res.status(201).send(newUser);
 });
 
-app.put('/products/:id', (req, res) => {
-  const product = products.find(p => p.id === parseInt(req.params.id));
-  if (product) {
-    product.name = req.body.name || product.name;
-    product.price = req.body.price || product.price;
-    res.send(product);
-  } else res.status(404).send({ error: "Product not found" });
+
+//products endponit 2
+app.get('/products', (req,res) =>{
+    res.send(products);
 });
 
-app.delete('/products/:id', (req, res) => {
-  const index = products.findIndex(p => p.id === parseInt(req.params.id));
-  if (index !== -1) {
-    products.splice(index, 1);
-    res.send({ message: "Product deleted" });
-  } else res.status(404).send({ error: "Product not found" });
+//get product by id
+app.get('/products/:id', (req,res) =>{
+    const productId = parseInt(req.params.id);
+    const product = products.find(p => p.id === productId);
+    if(product){
+        res.send(product); 
+    } else {
+        res.status(404).send({error: "Product not found"})
+    }
 });
 
-// ===================
-// COMMENTS CRUD
-// ===================
-app.get('/comments', (req, res) => res.send(comments));
-
-app.get('/comments/:id', (req, res) => {
-  const comment = comments.find(c => c.id === parseInt(req.params.id));
-  comment ? res.send(comment) : res.status(404).send({ error: "Comment not found" });
+//update product by id
+app.put('/products/:id', (req,res) =>{
+    const productId = parseInt(req.params.id);
+    const productIndex = products.findIndex(p => p.id === productId);
+    if(productIndex !== -1){
+        products[productIndex].name = "updated product";
+        res.send(products[productIndex]);
+    } else {
+        res.status(404).send({error: "Product not found"});
+    }
 });
 
-app.post('/comments', (req, res) => {
-  const { text } = req.body;
-  const newComment = { id: comments.length + 1, text: text || `Comment ${comments.length + 1}` };
-  comments.push(newComment);
-  res.status(201).send(newComment);
+
+//delete product by id
+app.delete('/products/:id', (req,res) =>{
+    const productId = parseInt(req.params.id);
+    const productIndex = products.findIndex(p => p.id === productId);
+    if(productIndex !== -1){
+        products.splice(productIndex, 1);
+        res.send({message: "Product deleted"});
+    } else {
+        res.status(404).send({error: "Product not found"});
+    }
 });
 
-app.put('/comments/:id', (req, res) => {
-  const comment = comments.find(c => c.id === parseInt(req.params.id));
-  if (comment) {
-    comment.text = req.body.text || comment.text;
-    res.send(comment);
-  } else res.status(404).send({ error: "Comment not found" });
+//create new product
+app.post('/products', (req,res) =>{
+    const newProduct = {
+        id: products.length + 1,
+        name: `Product ${products.length + 1}`,
+        price: 0.00
+    };
+    products.push(newProduct);
+    res.status(201).send(newProduct);
 });
 
-app.delete('/comments/:id', (req, res) => {
-  const index = comments.findIndex(c => c.id === parseInt(req.params.id));
-  if (index !== -1) {
-    comments.splice(index, 1);
-    res.send({ message: "Comment deleted" });
-  } else res.status(404).send({ error: "Comment not found" });
+
+
+//comment endpoint 4
+app.get('/comments', (req,res) =>{
+    res.send(comments);
 });
 
-// ===================
-// START SERVER
-// ===================
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+//get comment by id
+app.get('/comments/:id', (req,res) =>{
+    const commentId = parseInt(req.params.id);
+    const comment = comments.find(c => c.id === commentId);
+    if(comment){
+        res.send(comment);
+    } else {
+        res.status(404).send({error: "Comment not found"});
+    }
 });
+
+//update comment by id
+app.put('/comments/:id', (req,res) =>{
+    const commentId = parseInt(req.params.id);
+    const commentIndex = comments.findIndex(c => c.id === commentId);
+    if(commentIndex !== -1){
+        comments[commentIndex].text = "updated comments";
+        res.send(comments[commentIndex]);
+    } else {
+        res.status(404).send({error: "Comment not found"});
+    }
+});
+
+//delete comment by id
+app.delete('/comments/:id', (req,res) =>{
+    const commentId = parseInt(req.params.id);
+    const commentIndex = comments.findIndex(c => c.id === commentId);
+    if(commentIndex !== -1){
+        comments.splice(commentIndex, 1);
+        res.send({message: "Comment deleted"});
+    } else {
+        res.status(404).send({error: "Comment not found"});
+    }
+});
+
+//create new comment
+app.post('/comments', (req,res) =>{
+    const newComment = {
+        id: comments.length + 1,
+        text: `comments ${comments.length + 1}`,
+        text: `comments ${comments.length + 1}`,
+    };
+    comments.push(newComment);
+    res.status(201).send(newComment);
+});
+
+
+app.listen(port,()=>{
+    console.log(`server is runnig on http://localhost:${port}`);
+});
+
